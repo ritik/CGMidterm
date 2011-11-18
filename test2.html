@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <link rel="stylesheet" href="stick.css" type="text/css">
+    <script src="kinetic2d-v1.0.2.js"></script>
+    <script>
+
+            var radius = 300;
+            var sqtheta = 0;
+            var bttheta = 0;
+            var sttheta = 0;
+            var dtheta = Math.PI/6
+            
+            var cuberoot = Math.pow(1, 1/3);
+            
+
+            function drawsqSide(radius, sqtheta) {
+                this.radius = radius;
+                this.sqtheta = sqtheta;
+                context.save();
+                context.rotate(sqtheta);
+            	context.moveTo(-radius, radius);
+            	context.strokeStyle = "blue";
+            	context.lineTo(radius, radius);
+            	context.stroke();
+            	context.restore();
+            }
+            
+            function drawbtSide(radius, bttheta) {
+				this.radius = radius;
+				this.bttheta = bttheta;
+				context.save();
+				context.rotate(bttheta);
+				context.moveTo( -radius*cuberoot/2, radius/2 );
+				context.strokeStyle = "blue";
+				context.lineTo( radius*cuberoot, radius/2 );
+				context.stroke();
+				context.restore();
+			}
+
+			function drawstSide(radius, sttheta) {
+				this.radius = radius;
+				this.sttheta = sttheta;
+				context.save();
+				context.rotate(sttheta);
+				context.moveTo( -radius*cuberoot/4, -radius/4 );
+				context.strokeStyle = "blue";
+				context.lineTo( radius*cuberoot/2, -radius/4 );
+				context.stroke();
+				context.restore();
+			}
+
+            function init() {
+               canvas = document.getElementById("stickScene");
+               context = canvas.getContext("2d");
+               // More initialization stuff should go here.
+               // I could have put armWidth and armHeight in here too.
+            }
+
+            function run(){
+                // Update parameters here.
+                // Call this function at every iteration of the animation.
+                // Notice the js library that I included and didn't use - details in the reading
+            }
+
+            window.onload = function() {
+               init();
+               // save state 1
+               context.save();
+               // translate to the center of the canvas
+               context.translate( canvas.width/2, canvas.height/2 );
+               // save state 2
+               context.save();
+               
+               //square
+               drawsqSide(radius, sqtheta);
+               sqtheta += Math.PI / 2;
+               drawsqSide(radius, sqtheta);
+               sqtheta += Math.PI / 2;
+               drawsqSide(radius, sqtheta);
+               sqtheta += Math.PI / 2;
+               drawsqSide(radius, sqtheta);
+               
+               //big triangle
+               drawbtSide(radius, bttheta);
+               bttheta += Math.PI/3;
+               drawbtSide(radius, bttheta);
+               bttheta += Math.PI/3;
+               drawbtSide(radius, bttheta);
+               
+            };
+        </script>
+    </head>
+    <body onmousedown="return false;">
+        <canvas id="stickScene" width="960" height="640"></canvas>
+    </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <link rel="stylesheet" href="stick.css" type="text/css">
+    <script src="kinetic2d-v1.0.2.js"></script>
+    <script>
+
+            var radius = 100;
+            var sqtheta = 0;
+            var bttheta = 0;
+            var sqtheta = 0;
+            var dtheta = Math.PI/6
+            
+            var cuberoot = Math.pow(1, 1/3);
+
+            function init() {
+               	canvas = document.getElementById("stickScene");
+               	context = canvas.getContext("2d");
+				document.addEventListener('mousedown', mouseClickHandler, false);
+            	kin = new Kinetic_2d("stickScene");
+            	
+            	kin.setDrawStage(function () {
+                	kin.clear();
+                	var context = kin.getContext();
+                	run();
+            	});
+            }
+            
+            function mouseClickHandler(event) {
+            	kin.startAnimation();
+        	}
+
+            function run(){
+            	
+            	context.fillText(kin.frame.toString(), 10, 10);
+            	if (kin.frame != 0 && kin.frame < 400) {
+					
+					//square
+					for (var i = 0; i < 4; i++) {
+						drawsqSide(radius, sqtheta);
+						sqtheta += Math.PI/2;
+					}
+					
+					//big triangle
+					for (var j = 0; j < 3; j++){
+						drawbtSide(radius, bttheta);
+						drawstSide(radius, sttheta);
+						bttheta += Math.PI/3
+						sttheta -= Math.PI/3
+					}
+
+            		if (kin.frame >= 400) {
+                		kin.frame = 1;
+            		}
+            	figure.draw();
+        		}
+            }
+
+		function drawsqSide(radius, sqtheta) {
+			this.draw = drawsqSide;
+			this.radius = radius;
+			this.sqtheta = sqtheta;
+			context.rotate(sqtheta);
+			context.moveTo( -radius, radius );
+			context.lineTo( 2*radius, 0 );
+			context.restore();
+		}
+	
+		function drawbtSide(radius, bttheta) {
+			this.draw = drawbtSide;
+			this.radius = radius;
+			this.bttheta = bttheta;
+			context.rotate(bttheta);
+			context.moveTo( -radius*cuberoot/2, radius/2 );
+			context.lineTo( 2*radius*cuberoot/2, 0 );
+			context.restore();
+		}
+
+		function drawstSide(radius, sttheta) {
+			this.draw = drawstSide;
+			this.radius = radius;
+			this.sttheta = sttheta;
+			context.rotate(sttheta);
+			context.moveTo( -radius*cuberoot/4, -radius/4 );
+			context.lineTo( 2*radius*cuberoot/4, 0 );
+			context.restore();
+		}
+
+        window.onload = function() {
+               init();
+        };
+        </script>
+    </head>
+    <body onmousedown="return false;">
+        <canvas id="stickScene" width="960" height="640"></canvas>
+    </body>
+</html>
